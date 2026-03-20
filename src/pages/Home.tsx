@@ -90,10 +90,17 @@ export default function Home() {
         <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2px', margin: '2px 0' }}>
           {[
             { image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=700&q=80', tag: 'The Edit', title: 'Matching Shoes & Bags', desc: "Elegant women's shoes and bags from Malone Souliers and TOTEME", cta: 'Shop The Edit', href: '/products?cat=bags' },
-            { image: 'https://images.unsplash.com/photo-1541643600914-78b084683702?w=700&q=80', tag: 'New Designer', title: 'Meet Eredi Zucca', desc: 'Italian craftsmanship in every bottle — bold, modern scents', cta: 'Discover Now', href: '/products?cat=beauty' },
+            { image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=700&q=80', tag: 'New Designer', title: 'Meet Eredi Zucca', desc: 'Italian craftsmanship in every bottle — bold, modern scents', cta: 'Discover Now', href: '/products?cat=beauty' },
           ].map((ed, i) => (
             <div key={i} className="img-zoom" style={{ position: 'relative', overflow: 'hidden', height: '520px' }}>
-              <img src={ed.image} alt={ed.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.7s ease' }} />
+              <img
+                src={ed.image}
+                alt={ed.title}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.7s ease' }}
+                onError={e => {
+                  e.currentTarget.src = 'https://images.unsplash.com/photo-1541643600914-78b084683702?w=700&q=80'
+                }}
+              />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 60%)' }} />
               <div style={{ position: 'absolute', bottom: '36px', left: '36px', color: '#fff' }}>
                 <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '9px', letterSpacing: '2px', textTransform: 'uppercase', color: '#b8975a', marginBottom: '8px' }}>{ed.tag}</p>
