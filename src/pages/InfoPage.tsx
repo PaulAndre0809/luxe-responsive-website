@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 type InfoContent = {
@@ -165,13 +166,20 @@ const infoContent: Record<string, InfoContent> = {
 export default function InfoPage() {
   const { slug = '' } = useParams()
   const page = infoContent[slug]
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
 
   if (!page) {
     return (
-      <main style={{ minHeight: '70vh', background: '#fafaf8', padding: '56px 20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <main style={{ minHeight: '70vh', background: '#fafaf8', padding: isMobile ? '40px 16px' : '56px 60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ maxWidth: '620px', textAlign: 'center' }}>
           <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '10px', letterSpacing: '3px', textTransform: 'uppercase', color: '#b8975a', marginBottom: '10px' }}>Page Not Found</p>
-          <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '46px', fontWeight: 300, marginBottom: '16px', fontStyle: 'italic' }}>We could not find that page</h1>
+          <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: isMobile ? '36px' : '46px', fontWeight: 300, marginBottom: '16px', fontStyle: 'italic' }}>We could not find that page</h1>
           <Link to="/" style={{ display: 'inline-block', textDecoration: 'none', padding: '12px 30px', background: '#0a0a0a', color: '#fff', fontFamily: 'Montserrat, sans-serif', fontSize: '10px', letterSpacing: '2px', textTransform: 'uppercase' }}>
             Back to Home
           </Link>
@@ -181,13 +189,13 @@ export default function InfoPage() {
   }
 
   return (
-    <main style={{ background: '#fafaf8', minHeight: '100vh', padding: '44px 20px 80px' }}>
+    <main style={{ background: '#fafaf8', minHeight: '100vh', padding: isMobile ? '32px 16px 60px' : '48px 60px 80px' }}>
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
         <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '10px', letterSpacing: '3px', textTransform: 'uppercase', color: '#b8975a', marginBottom: '10px' }}>Luxe Information</p>
-        <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '56px', lineHeight: 1.05, fontWeight: 300, fontStyle: 'italic', marginBottom: '18px' }}>{page.title}</h1>
-        <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '14px', lineHeight: 1.8, color: '#4a4744', marginBottom: '34px', maxWidth: '760px' }}>{page.subtitle}</p>
+        <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: isMobile ? '38px' : '56px', lineHeight: 1.05, fontWeight: 300, fontStyle: 'italic', marginBottom: '18px' }}>{page.title}</h1>
+        <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: isMobile ? '13px' : '14px', lineHeight: 1.8, color: '#4a4744', marginBottom: '34px', maxWidth: '760px' }}>{page.subtitle}</p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
           {page.sections.map(section => (
             <article key={section.heading} style={{ background: '#fff', border: '1px solid #e8e4de', padding: '20px' }}>
               <h2 style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '10px', letterSpacing: '2px', textTransform: 'uppercase', color: '#b8975a', marginBottom: '10px' }}>{section.heading}</h2>

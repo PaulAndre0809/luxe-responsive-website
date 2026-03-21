@@ -60,7 +60,7 @@ export default function ProductList() {
     <div style={{ background: '#fafaf8', minHeight: '100vh' }}>
 
       {/* Header */}
-      <div style={{ padding: isMobile ? '28px 20px 20px' : '48px 60px 32px', borderBottom: '1px solid #e8e4de' }}>
+      <div style={{ padding: isMobile ? '24px 16px 16px' : '48px 60px 32px', borderBottom: '1px solid #e8e4de' }}>
         <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '9px', letterSpacing: '3px', textTransform: 'uppercase', color: '#b8975a', marginBottom: '8px' }}>
           {searchParam ? 'Search Results' : 'Browse'}
         </p>
@@ -73,7 +73,7 @@ export default function ProductList() {
       </div>
 
       {/* Category tabs */}
-      <div style={{ padding: isMobile ? '0 12px' : '0 60px', borderBottom: '1px solid #e8e4de', display: 'flex', gap: '0', overflowX: 'auto' }}>
+      <div style={{ padding: isMobile ? '0 4px' : '0 60px', borderBottom: '1px solid #e8e4de', display: 'flex', gap: '0', overflowX: 'auto' }}>
         {categories.map(cat => (
           <button key={cat} onClick={() => handleCategoryChange(cat)} style={{ background: 'none', border: 'none', padding: '16px 20px', cursor: 'pointer', fontFamily: 'Montserrat, sans-serif', fontSize: '10px', fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', color: activeCategory === cat ? '#0a0a0a' : '#8a8680', borderBottom: activeCategory === cat ? '2px solid #b8975a' : '2px solid transparent', transition: 'all 0.2s ease', whiteSpace: 'nowrap' }}>
             {cat === 'new' ? 'New In' : cat}
@@ -84,7 +84,7 @@ export default function ProductList() {
       <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '0' }}>
 
         {/* Sidebar filters */}
-        <aside style={{ width: isMobile ? '100%' : '240px', flexShrink: 0, padding: isMobile ? '20px' : '32px 32px', borderRight: isMobile ? 'none' : '1px solid #e8e4de', borderBottom: isMobile ? '1px solid #e8e4de' : 'none', minHeight: isMobile ? 'auto' : '100vh' }}>
+        <aside style={{ width: isMobile ? '100%' : '240px', flexShrink: 0, padding: isMobile ? '16px' : '32px 32px', borderRight: isMobile ? 'none' : '1px solid #e8e4de', borderBottom: isMobile ? '1px solid #e8e4de' : 'none', minHeight: isMobile ? 'auto' : '100vh' }}>
           <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '9px', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '24px', color: '#0a0a0a', display: 'flex', alignItems: 'center', gap: '6px' }}>
             <SlidersHorizontal size={12} /> Filters
           </p>
@@ -112,7 +112,7 @@ export default function ProductList() {
         </aside>
 
         {/* Products grid */}
-        <div style={{ flex: 1, padding: isMobile ? '20px' : '32px 40px' }}>
+        <div style={{ flex: 1, padding: isMobile ? '16px' : '32px 40px' }}>
           {filtered.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '80px 0' }}>
               <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '28px', color: '#8a8680', marginBottom: '12px' }}>No products found</p>

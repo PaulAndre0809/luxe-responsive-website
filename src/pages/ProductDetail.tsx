@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { products } from '../data/products'
 import { useCartStore } from '../store/cartStore'
@@ -16,9 +16,16 @@ export default function ProductDetail() {
   const [activeImage, setActiveImage] = useState(0)
   const [wishlisted, setWishlisted] = useState(false)
   const [sizeError, setSizeError] = useState(false)
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
 
   if (!product) return (
-    <div style={{ padding: '80px', textAlign: 'center' }}>
+    <div style={{ padding: isMobile ? '40px 16px' : '80px', textAlign: 'center' }}>
       <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '32px' }}>Product not found</p>
       <Link to="/products" style={{ display: 'inline-block', marginTop: '20px', fontFamily: 'Montserrat, sans-serif', fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase', color: '#0a0a0a' }}>Back to Products</Link>
     </div>
@@ -43,21 +50,21 @@ export default function ProductDetail() {
     <div style={{ background: '#fafaf8' }}>
 
       {/* Breadcrumb */}
-      <div style={{ padding: '20px 60px', borderBottom: '1px solid #e8e4de' }}>
+      <div style={{ padding: isMobile ? '14px 16px' : '20px 60px', borderBottom: '1px solid #e8e4de' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Link to="/" style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '10px', color: '#8a8680', textDecoration: 'none' }}>Home</Link>
           <span style={{ color: '#c8c4bc', fontSize: '10px' }}>/</span>
           <Link to="/products" style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '10px', color: '#8a8680', textDecoration: 'none' }}>Products</Link>
           <span style={{ color: '#c8c4bc', fontSize: '10px' }}>/</span>
-          <span style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '10px', color: '#0a0a0a' }}>{product.name}</span>
+          <span style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '10px', color: '#0a0a0a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: isMobile ? '120px' : 'none' }}>{product.name}</span>
         </div>
       </div>
 
       {/* Main content */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0', maxWidth: '1400px', margin: '0 auto', padding: '0 60px 80px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '0', maxWidth: '1400px', margin: '0 auto', padding: isMobile ? '0 16px 60px' : '0 60px 80px' }}>
 
         {/* Images */}
-        <div style={{ paddingTop: '40px', paddingRight: '60px' }}>
+        <div style={{ paddingTop: '32px', paddingRight: isMobile ? '0' : '60px' }}>
           <div style={{ position: 'relative', overflow: 'hidden', marginBottom: '12px', aspectRatio: '3/4' }}>
             <img src={images[activeImage]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'opacity 0.4s ease' }} />
             {product.tag && (
@@ -74,13 +81,13 @@ export default function ProductDetail() {
         </div>
 
         {/* Info */}
-        <div style={{ paddingTop: '40px', paddingLeft: '40px' }}>
+        <div style={{ paddingTop: isMobile ? '24px' : '40px', paddingLeft: isMobile ? '0' : '40px' }}>
           <Link to="/products" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontFamily: 'Montserrat, sans-serif', fontSize: '10px', color: '#8a8680', textDecoration: 'none', marginBottom: '24px', letterSpacing: '1px' }}>
             <ChevronLeft size={12} /> Back
           </Link>
 
           <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '10px', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', color: '#b8975a', marginBottom: '10px' }}>{product.brand}</p>
-          <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '38px', fontWeight: 400, lineHeight: 1.2, marginBottom: '16px' }}>{product.name}</h1>
+          <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: isMobile ? '30px' : '38px', fontWeight: 400, lineHeight: 1.2, marginBottom: '16px' }}>{product.name}</h1>
 
           {/* Rating */}
           {product.rating && (
@@ -167,12 +174,12 @@ export default function ProductDetail() {
 
       {/* Related products */}
       {related.length > 0 && (
-        <div style={{ padding: '60px', borderTop: '1px solid #e8e4de' }}>
-          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+        <div style={{ padding: isMobile ? '40px 16px' : '60px', borderTop: '1px solid #e8e4de' }}>
+          <div style={{ textAlign: 'center', marginBottom: isMobile ? '28px' : '40px' }}>
             <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '9px', letterSpacing: '3px', textTransform: 'uppercase', color: '#b8975a', marginBottom: '10px' }}>You May Also Like</p>
-            <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '38px', fontWeight: 300, fontStyle: 'italic' }}>Related Products</h2>
+            <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: isMobile ? '30px' : '38px', fontWeight: 300, fontStyle: 'italic' }}>Related Products</h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '24px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2,1fr)' : 'repeat(4,1fr)', gap: isMobile ? '14px' : '24px' }}>
             {related.map(p => <ProductCard key={p.id} product={p} />)}
           </div>
         </div>

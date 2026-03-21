@@ -85,7 +85,7 @@ export default function Checkout() {
   )
 
   return (
-    <div style={{ background: '#fafaf8', minHeight: '100vh', padding: isMobile ? '28px 16px' : '48px 60px' }}>
+    <div style={{ background: '#fafaf8', minHeight: '100vh', padding: isMobile ? '24px 16px' : '48px 60px' }}>
       <div style={{ marginBottom: '40px' }}>
         <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '9px', letterSpacing: '3px', textTransform: 'uppercase', color: '#b8975a', marginBottom: '8px' }}>Secure Checkout</p>
         <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: isMobile ? '34px' : '44px', fontWeight: 300, fontStyle: 'italic' }}>Checkout</h1>
