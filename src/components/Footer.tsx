@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 const trendingColumns = [
@@ -72,6 +72,13 @@ const footerSections = [
 export default function Footer() {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState('')
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -90,10 +97,10 @@ export default function Footer() {
 
       {/* Top trending — distinct warm charcoal section */}
       <div style={{ background: '#1c1915', borderTop: '3px solid #b8975a', paddingTop: '40px' }}>
-        <div style={{ padding: '0 60px 12px' }}>
+        <div style={{ padding: isMobile ? '0 16px 12px' : '0 60px 12px' }}>
           <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '8px', fontWeight: 600, letterSpacing: '3px', textTransform: 'uppercase', color: '#b8975a', marginBottom: '28px' }}>What's Trending</p>
         </div>
-        <div style={{ padding: '0 60px 48px', borderBottom: '1px solid #2e2a25', display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '40px' }}>
+        <div style={{ padding: isMobile ? '0 16px 40px' : '0 60px 48px', borderBottom: '1px solid #2e2a25', display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(3,1fr)', gap: isMobile ? '28px' : '40px' }}>
         {trendingColumns.map(col => (
           <div key={col.title}>
             <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '9px', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', color: '#b8975a', marginBottom: '16px' }}>{col.title}</p>
@@ -112,18 +119,18 @@ export default function Footer() {
       <div style={{ background: '#0a0a0a', paddingTop: '48px' }}>
 
       {/* Newsletter */}
-      <div style={{ borderBottom: '1px solid #1a1a1a', padding: '30px 60px 36px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+      <div style={{ borderBottom: '1px solid #1a1a1a', padding: isMobile ? '24px 16px' : '30px 60px 36px', display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'center', gap: '16px' }}>
         <div>
           <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '9px', letterSpacing: '2px', color: '#b8975a', textTransform: 'uppercase', marginBottom: '8px' }}>Newsletter</p>
           <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '12px', color: '#7a7571' }}>Get private sale alerts and weekly product edits.</p>
         </div>
-        <form onSubmit={handleNewsletterSubmit} style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+        <form onSubmit={handleNewsletterSubmit} style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', width: isMobile ? '100%' : 'auto' }}>
           <input
             type="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
             placeholder="Your email address"
-            style={{ width: '250px', maxWidth: '100%', background: 'transparent', border: '1px solid #2c2a28', color: '#fafaf8', padding: '10px 12px', fontFamily: 'Montserrat, sans-serif', fontSize: '12px', outline: 'none' }}
+            style={{ width: isMobile ? '100%' : '250px', maxWidth: '100%', background: 'transparent', border: '1px solid #2c2a28', color: '#fafaf8', padding: '10px 12px', fontFamily: 'Montserrat, sans-serif', fontSize: '12px', outline: 'none' }}
           />
           <button type="submit" style={{ border: '1px solid #b8975a', background: '#b8975a', color: '#fff', padding: '10px 18px', cursor: 'pointer', fontFamily: 'Montserrat, sans-serif', fontSize: '10px', letterSpacing: '2px', textTransform: 'uppercase' }}>
             Subscribe
@@ -138,7 +145,7 @@ export default function Footer() {
       </div>
 
       {/* Links */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '40px', padding: '0 60px 48px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(3,1fr)', gap: isMobile ? '28px' : '40px', padding: isMobile ? '0 16px 40px' : '0 60px 48px' }}>
         {footerSections.map(sec => (
           <div key={sec.title}>
             <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '9px', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', color: '#b8975a', marginBottom: '16px' }}>{sec.title}</p>
@@ -153,27 +160,38 @@ export default function Footer() {
       </div>
 
       {/* Bottom */}
-      <div style={{ borderTop: '1px solid #1a1a1a', padding: '20px 60px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ borderTop: '1px solid #1a1a1a', padding: isMobile ? '20px 16px' : '20px 60px', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'flex-start' : 'center', justifyContent: 'space-between', gap: isMobile ? '20px' : '0' }}>
+
+        {/* Copyright + Back to top */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
           <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '10px', color: '#3a3734' }}>© 2026 Luxe. All Rights Reserved.</p>
           <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ background: 'none', border: '1px solid #2b2825', color: '#7a7571', padding: '5px 8px', cursor: 'pointer', fontFamily: 'Montserrat, sans-serif', fontSize: '9px', letterSpacing: '1px', textTransform: 'uppercase' }}>
             Back to top
           </button>
         </div>
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
-          {['Instagram', 'TikTok', 'YouTube'].map(platform => (
-            <button
-              key={platform}
-              onClick={() => window.open(`https://${platform.toLowerCase()}.com`, '_blank', 'noopener,noreferrer')}
-              style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '8px', fontWeight: 600, letterSpacing: '0.5px', color: '#3a3734', border: '1px solid #222', padding: '4px 7px', borderRadius: '2px', background: 'transparent', cursor: 'pointer' }}
-            >
-              {platform}
-            </button>
-          ))}
-          {['VISA', 'MASTERCARD', 'AMEX', 'APPLE PAY', 'PAYPAL'].map(p => (
-            <span key={p} style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '8px', fontWeight: 600, letterSpacing: '0.5px', color: '#3a3734', border: '1px solid #222', padding: '4px 7px', borderRadius: '2px' }}>{p}</span>
-          ))}
+
+        {/* Social + Payment — stack into separate rows on mobile */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: isMobile ? 'flex-start' : 'flex-end', width: isMobile ? '100%' : 'auto' }}>
+          {/* Social */}
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            {['Instagram', 'TikTok', 'YouTube'].map(platform => (
+              <button
+                key={platform}
+                onClick={() => window.open(`https://${platform.toLowerCase()}.com`, '_blank', 'noopener,noreferrer')}
+                style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '8px', fontWeight: 600, letterSpacing: '0.5px', color: '#7a7571', border: '1px solid #2b2825', padding: '6px 10px', borderRadius: '2px', background: 'transparent', cursor: 'pointer' }}
+              >
+                {platform}
+              </button>
+            ))}
+          </div>
+          {/* Payment methods */}
+          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+            {['VISA', 'MASTERCARD', 'AMEX', 'APPLE PAY', 'PAYPAL'].map(p => (
+              <span key={p} style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '8px', fontWeight: 600, letterSpacing: '0.5px', color: '#3a3734', border: '1px solid #222', padding: '5px 8px', borderRadius: '2px' }}>{p}</span>
+            ))}
+          </div>
         </div>
+
       </div>
 
       </div>
