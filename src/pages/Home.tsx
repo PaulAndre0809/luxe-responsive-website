@@ -55,7 +55,7 @@ export default function Home() {
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.2) 55%, transparent 100%)' }} />
           </div>
         ))}
-        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', padding: '0 80px' }}>
+        <div className="hero-content">
           <div key={slide} style={{ color: '#fff', maxWidth: '560px' }}>
             <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '10px', fontWeight: 500, letterSpacing: '3px', textTransform: 'uppercase', color: '#b8975a', marginBottom: '18px', animation: 'fadeUp 0.6s ease forwards' }}>{s.tag}</p>
             <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(56px,8vw,108px)', fontWeight: 300, lineHeight: 0.95, marginBottom: '22px', whiteSpace: 'pre-line', animation: 'fadeUp 0.7s ease 0.1s both' }}>{s.title}</h1>
@@ -67,7 +67,7 @@ export default function Home() {
           </div>
         </div>
         {/* Dots */}
-        <div style={{ position: 'absolute', bottom: '30px', left: '80px', display: 'flex', gap: '10px' }}>
+        <div className="hero-dots">
           {heroSlides.map((_, i) => (
             <button key={i} onClick={() => setSlide(i)} style={{ width: i === slide ? '30px' : '8px', height: '2px', background: i === slide ? '#b8975a' : 'rgba(255,255,255,0.35)', border: 'none', cursor: 'pointer', transition: 'all 0.4s ease' }} />
           ))}
@@ -87,7 +87,7 @@ export default function Home() {
 
       {/* EDITORIAL SPLIT */}
       <AnimatedSection>
-        <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2px', margin: '2px 0' }}>
+        <section className="grid-editorial">
           {[
             { image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=700&q=80', tag: 'The Edit', title: 'Matching Shoes & Bags', desc: "Elegant women's shoes and bags from Malone Souliers and TOTEME", cta: 'Shop The Edit', href: '/products?cat=bags' },
             { image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=700&q=80', tag: 'New Designer', title: 'Meet Eredi Zucca', desc: 'Italian craftsmanship in every bottle — bold, modern scents', cta: 'Discover Now', href: '/products?cat=beauty' },
@@ -115,12 +115,13 @@ export default function Home() {
 
       {/* CATEGORIES */}
       <AnimatedSection delay={100}>
-        <section style={{ padding: '80px 60px' }}>
+        <section style={{ padding: '80px 0' }}>
+          <div className="section-container">
           <div style={{ textAlign: 'center', marginBottom: '50px' }}>
             <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '9px', letterSpacing: '3px', textTransform: 'uppercase', color: '#b8975a', marginBottom: '12px' }}>Explore</p>
             <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '44px', fontWeight: 300, fontStyle: 'italic' }}>Shop by Category</h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6,1fr)', gap: '16px' }}>
+          <div className="grid-categories">
             {categories.map((cat, i) => (
               <AnimatedSection key={cat.name} delay={i * 70}>
                 <Link to={cat.href} style={{ textDecoration: 'none', color: '#0a0a0a', display: 'block' }}>
@@ -133,12 +134,14 @@ export default function Home() {
               </AnimatedSection>
             ))}
           </div>
+          </div>
         </section>
       </AnimatedSection>
 
       {/* FEATURE BANNER */}
       <AnimatedSection>
-        <section style={{ position: 'relative', height: '460px', overflow: 'hidden', margin: '0 60px', borderRadius: '2px' }}>
+        <div className="section-container">
+        <section style={{ position: 'relative', height: '460px', overflow: 'hidden', borderRadius: '2px' }}>
           <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&q=80" alt="Feature" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(0,0,0,0.68) 0%, rgba(0,0,0,0.1) 65%)' }} />
           <div style={{ position: 'absolute', top: '50%', left: '64px', transform: 'translateY(-50%)', color: '#fff', maxWidth: '400px' }}>
@@ -151,11 +154,13 @@ export default function Home() {
             >Shop Now</Link>
           </div>
         </section>
+        </div>
       </AnimatedSection>
 
       {/* NEW IN PRODUCTS */}
       <AnimatedSection delay={100}>
-        <section style={{ padding: '80px 60px' }}>
+        <section style={{ padding: '80px 0' }}>
+          <div className="section-container">
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '40px' }}>
             <div>
               <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '9px', letterSpacing: '3px', textTransform: 'uppercase', color: '#b8975a', marginBottom: '10px' }}>Just Arrived</p>
@@ -163,7 +168,7 @@ export default function Home() {
             </div>
             <Link to="/products" style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '10px', fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', color: '#0a0a0a', textDecoration: 'none', borderBottom: '1px solid #0a0a0a', paddingBottom: '2px' }}>View All</Link>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6,1fr)', gap: '20px' }}>
+          <div className="grid-products">
             {featured.map((p, i) => (
               <AnimatedSection key={p.id} delay={i * 60}>
                 <ProductCard product={p} />
@@ -176,12 +181,14 @@ export default function Home() {
               onMouseLeave={e => { e.currentTarget.style.background = '#0a0a0a'; e.currentTarget.style.color = '#fff' }}
             >Shop All</Link>
           </div>
+          </div>
         </section>
       </AnimatedSection>
 
       {/* GIFT CARD BANNER */}
       <AnimatedSection>
-        <section style={{ margin: '0 60px 80px', background: '#0a0a0a', padding: '56px 72px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div className="section-container" style={{ marginBottom: '80px' }}>
+        <section className="gift-banner">
           <div>
             <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '9px', letterSpacing: '3px', textTransform: 'uppercase', color: '#b8975a', marginBottom: '12px' }}>The Perfect Gift</p>
             <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '40px', fontWeight: 300, color: '#fafaf8', fontStyle: 'italic', marginBottom: '10px' }}>E-Gift Cards</h2>
@@ -192,6 +199,7 @@ export default function Home() {
             onMouseLeave={e => { e.currentTarget.style.background = '#b8975a'; e.currentTarget.style.color = '#fff' }}
           >Shop Now</Link>
         </section>
+        </div>
       </AnimatedSection>
 
     </main>
