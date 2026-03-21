@@ -86,10 +86,14 @@ export default function Footer() {
   }
 
   return (
-    <footer style={{ background: '#0a0a0a', color: '#fafaf8', paddingTop: '64px' }}>
+    <footer style={{ color: '#fafaf8' }}>
 
-      {/* Top trending */}
-      <div style={{ padding: '0 60px 48px', borderBottom: '1px solid #1a1a1a', display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '40px' }}>
+      {/* Top trending — distinct warm charcoal section */}
+      <div style={{ background: '#1c1915', borderTop: '3px solid #b8975a', paddingTop: '40px' }}>
+        <div style={{ padding: '0 60px 12px' }}>
+          <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '8px', fontWeight: 600, letterSpacing: '3px', textTransform: 'uppercase', color: '#b8975a', marginBottom: '28px' }}>What's Trending</p>
+        </div>
+        <div style={{ padding: '0 60px 48px', borderBottom: '1px solid #2e2a25', display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '40px' }}>
         {trendingColumns.map(col => (
           <div key={col.title}>
             <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '9px', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', color: '#b8975a', marginBottom: '16px' }}>{col.title}</p>
@@ -101,7 +105,11 @@ export default function Footer() {
             ))}
           </div>
         ))}
+        </div>
       </div>
+
+      {/* Main footer — pure black */}
+      <div style={{ background: '#0a0a0a', paddingTop: '48px' }}>
 
       {/* Newsletter */}
       <div style={{ borderBottom: '1px solid #1a1a1a', padding: '30px 60px 36px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
@@ -166,6 +174,8 @@ export default function Footer() {
             <span key={p} style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '8px', fontWeight: 600, letterSpacing: '0.5px', color: '#3a3734', border: '1px solid #222', padding: '4px 7px', borderRadius: '2px' }}>{p}</span>
           ))}
         </div>
+      </div>
+
       </div>
     </footer>
   )

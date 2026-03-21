@@ -19,6 +19,10 @@ export default function ProductDetail() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }, [id])
+
+  useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth < 768)
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
